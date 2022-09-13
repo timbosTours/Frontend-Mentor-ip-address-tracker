@@ -1,3 +1,13 @@
-header{
-    background-image: ('./images/pattern-bg.png');
+main{
+    height: 100vh;
+}
+
+#map{
+    height: 180px;
+    width: 180px;
+}
+
+footer{
+    position: relative;
+    bottom: 0;
 }
