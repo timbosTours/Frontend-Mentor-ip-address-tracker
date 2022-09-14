@@ -1,0 +1,22 @@
+{
+  "name": "ip-address-tracker-master",
+  "version": "1.0.0",
+  "description": "Ip address tracker challenge from Frontend Mentor",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timbosTours/Frontend-Mentor-ip-address-tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timbosTours/Frontend-Mentor-ip-address-tracker/issues"
+  },
+  "homepage": "https://github.com/timbosTours/Frontend-Mentor-ip-address-tracker#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}

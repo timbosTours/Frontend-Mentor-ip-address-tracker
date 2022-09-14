@@ -1,14 +1,10 @@
-main{
-    height: 100vh;
-}
-
 #map{
-    height: 180px;
-    width: 180px;
+    height: 400px;
+    width: 400px;
 }
 
 footer{
     position: relative;
     bottom: 0;
-    background-color: yellow;
+    display: none;
 }
