@@ -1,0 +1,10 @@
+#map{
+    height: 400px;
+    width: 400px;
+}
+
+footer{
+    position: relative;
+    bottom: 0;
+    display: none;
+}
