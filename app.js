@@ -1,25 +1,27 @@
-const http = require('http')
-const port = 3000
+const express = require('express');
+const path = require('path');
 
-const server = http.createServer(function (req, res) {
-    res.write('helloooo')
-    res.end()
+const app = express();
+
+app.use(express.static('./ip-address/tracker-master'))
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './index.html'))
 })
 
-server.listen(port, function (error) {
-    if (error) { 'whoops', error }
-    else {
-        console.log('server is listening on port' + port);
-    }
-}
-)
+app.all('*', (req, res) => {
+    res.status(404).send('Resource not found')
+})
 
-// Create map with Leaflet.js(long, lat, zoom level)
-var map = L.map('map').setView([51.505, -0.09], 13);
+app.listen(5000, () => {
+    console.log('Server is listening on port 5000...');
+})
+// // Create map with Leaflet.js(long, lat, zoom level)
+// var map = L.map('map').setView([51.505, -0.09], 13);
 
 
-// Load tiles onto map for map styles
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap'
-}).addTo(map);
+// // Load tiles onto map for map styles
+// L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//     maxZoom: 19,
+//     attribution: '© OpenStreetMap'
+// }).addTo(map);
