@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+// var L = require('leaflet');
 
 const app = express();
 
@@ -19,11 +20,13 @@ app.listen(5000, () => {
 
 
 // // Create map with Leaflet.js(long, lat, zoom level)
-var map = L.map('map').setView([51.505, -0.09], 13);
 
 
-// Load tiles onto map for map styles
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap'
-}).addTo(map);
+// var map = L.map('map').setView([51.505, -0.09], 13);
+
+
+// // Load tiles onto map for map styles
+// L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//     maxZoom: 19,
+//     attribution: '© OpenStreetMap'
+// }).addTo(map);
