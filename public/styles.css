@@ -1,12 +1,17 @@
+
 *{
     padding: 0;
     margin: 0;
 }
 
-#map{
-    height: 400px;
-    width: 400px;
+:root{
+    --very-dark-gray: hsl(0, 0%, 17%);
+    --dark-gray: hsl(0, 0%, 59%);
+
+    --ff-rubik: 'Rubik', sans-serif;
 }
+
+
 
 body{
     justify-content: center;
@@ -15,13 +20,25 @@ body{
     min-height: 100vh;
 }
 
-#main-header{
+#header-div{
+    
+    min-height: 8em;
     background-image: url('./pattern-bg.png');
     background-repeat: no-repeat;
-    /* background-attachment: fixed; */
     background-position: center; 
+}
+
+#main-header{
+    padding: 1em;
     color: white;
-    min-height: 5em;
+    font-family: var(--ff-rubik);
+    font-weight: 400;
+    font-size: x-large;
+}
+
+#map{
+    height: 400px;
+    width: 400px;
 }
 
 footer{

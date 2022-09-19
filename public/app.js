@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
-// var L = require('leaflet');
+const leaflet = ('leaflet');
+
 
 const app = express();
 
@@ -22,7 +23,7 @@ app.listen(5000, () => {
 // // Create map with Leaflet.js(long, lat, zoom level)
 
 
-// var map = L.map('map').setView([51.505, -0.09], 13);
+// let map = leaflet.map('map').setView([51.505, -0.09], 13);
 
 
 // // Load tiles onto map for map styles
