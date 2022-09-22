@@ -31,9 +31,9 @@
 <body>
   <header id="header-div">
   <h1 id="main-header">IP Address Tracker</h1>
-  
-  <input type="text" placeholder="Search for any IP address or domain"> 
-  
+  <span id="ip-input-container"><input id="ip-input" type="text" placeholder="Search for any IP address or domain">
+  <img id="arrow-icon" src="./icon-arrow.svg" alt="arrow icon">
+  </span>
   <!-- <div id="info-div"> IP Adress, location, timezone, isp</div> -->
  <!-- add offset value dynamically using the API -->
 
@@ -50,8 +50,8 @@
 
 </footer>
   <!-- app.js link -->
-  <script type="text/javascript" src="./app.js"></script>
-  <script type="text/javascript" src="./server.js"></script>
+  <script type="module" src="./app.js"></script>
+  <script type="module" src="./server.js"></script>
   
 </body>
 </html>
