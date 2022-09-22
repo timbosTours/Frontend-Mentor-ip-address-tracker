@@ -14,6 +14,14 @@
 
 
 body{
+    /* center items on the page */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+}
+
+header{
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -21,8 +29,7 @@ body{
 }
 
 #header-div{
-    
-    min-height: 8em;
+    min-height: 16em;
     background-image: url('./pattern-bg.png');
     background-repeat: no-repeat;
     background-position: center; 
@@ -35,6 +42,28 @@ body{
     font-weight: 400;
     font-size: x-large;
 }
+
+#ip-input-container{
+    display: inline-flex;
+    min-height: 3em;
+    min-width: 18em;
+    border-radius: 10px;
+}
+
+#ip-input{
+    border: none;
+    width: 20em;
+    border-radius: 10px 0px 0px 10px;
+}
+
+#arrow-icon{
+    border: none;
+    background-color: black;
+    padding: 1em;
+    border-radius: 0px 10px 10px  0px  ;
+
+}
+
 
 #map{
     height: 400px;
