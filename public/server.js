@@ -1,30 +1,35 @@
 const request = require('request'); 
 const express = require('express');
+const router = express.Router();
 const path = require('path');
+const { response } = require('express');
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 
 
 const app = express();
 
-let ipData = request.get(`https://geo.ipify.org/api/v2/country?apiKey=${process.env.API_KEY}`, function(err, res, data) {
-    if(!err && res.statusCode == 200) { // Successful response
+app.use(express.static('./public'));
+
+let ipData = {}
+
+request.get(`https://geo.ipify.org/api/v2/country?apiKey=${process.env.API_KEY}`,
+    function (err, res, data) {
+        if (!err && res.statusCode == 200) { // Successful response
         console.log(data); // Displays the response from the API
         ipData = data;
-        console.log(ipData.domains);
     } else {
         console.log(err);
         ipData = err;
     }
 });
 
-app.get("/ipdata", (req, res) => {
-    res.jsonp(ipData);
-});
-
-app.use(express.static('./public'))
-
 app.get('/', (req, res) => {
     res.sendFile('./index.html')
+})
+
+app.get('/ipData', (req, res) => {
+    res.type('application/json');
+    res.jsonp(ipData);
 })
 
 

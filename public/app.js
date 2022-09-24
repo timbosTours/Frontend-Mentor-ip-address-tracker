@@ -1,3 +1,16 @@
+
+
+async function getIpData() {
+    // fetch data from node server
+    const response = await fetch('http://localhost:5000/ipData');
+    const data = await response.json();
+    // convert json string into object
+    var ipData = JSON.parse(data)
+    console.log(ipData);
+};
+
+getIpData();
+
 // // Create map with Leaflet.js(long, lat, zoom level)
 
 
@@ -9,5 +22,3 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '© OpenStreetMap'
 }).addTo(map);
-
-console.log(IpData)
