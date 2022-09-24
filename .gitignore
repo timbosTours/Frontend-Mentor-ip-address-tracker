@@ -16,3 +16,4 @@
 
 # Hide api key
 .env
+env.development
