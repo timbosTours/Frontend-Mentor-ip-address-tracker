@@ -30,16 +30,36 @@
 </head>
 <body>
   <header id="header-div">
+  <div>
   <h1 id="main-header">IP Address Tracker</h1>
-
+  </div>
+  
+  <br>
+  
+  <div>
   <form id="ip-input-container">
     <input id="ip-input" type="text" placeholder="Search for any IP address or domain">
     <button id="submit-ip-button" type="submit">
   <img id="arrow-icon" src="./icon-arrow.svg" alt="arrow icon">
 </button>
-  </form>
-
-  <!-- <div id="info-div"> IP Adress, location, timezone, isp</div> -->
+</form>
+</div><br>
+  <section id="info-div">
+  <ul id="ip-info-list">
+    <li id="li-ipAddress">
+      <h1 class="list-heading">IP ADDRESS</h1>
+    </li>
+    <li id="li-location">
+      <h1 class="list-heading">LOCATION</h1>
+    </li>
+    <li id="li-timezone">
+      <h1 class="list-heading">TIMEZONE</h1>
+    </li>
+    <li id="li-isp">
+      <h1 class="list-heading">ISP</h1>
+    </li>
+  </ul>
+  </section>
  <!-- add offset value dynamically using the API -->
 
 </header>

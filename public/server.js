@@ -1,3 +1,4 @@
+// load and configure packages
 const request = require('request'); 
 const express = require('express');
 const router = express.Router();
@@ -5,15 +6,19 @@ const path = require('path');
 const { response } = require('express');
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 
-
+// initiate app
 const app = express();
 
+// serev static files(html, css, app.js, images etc...)
 app.use(express.static('./public'));
 
+// create empty array to store data from API
 let ipData = {}
 
+// get data from api
 request.get(`https://geo.ipify.org/api/v2/country?apiKey=${process.env.API_KEY}`,
     function (err, res, data) {
+        // check for response or error
         if (!err && res.statusCode == 200) { // Successful response
         console.log(data); // Displays the response from the API
         ipData = data;
@@ -23,10 +28,12 @@ request.get(`https://geo.ipify.org/api/v2/country?apiKey=${process.env.API_KEY}`
     }
 });
 
+// get root
 app.get('/', (req, res) => {
     res.sendFile('./index.html')
 })
 
+// get ip data for client
 app.get('/ipData', (req, res) => {
     res.type('application/json');
     res.jsonp(ipData);
