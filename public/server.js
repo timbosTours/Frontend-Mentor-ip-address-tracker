@@ -15,13 +15,15 @@ app.use(express.static('./public'));
 // create empty array to store data from API
 let ipData = {}
 
+
+
 // get data from api
-request.get(`https://geo.ipify.org/api/v2/country?apiKey=${process.env.API_KEY}`,
+request.get(`https://geo.ipify.org/api/v2/country,city?apiKey=${process.env.API_KEY}`,
     function (err, res, data) {
         // check for response or error
         if (!err && res.statusCode == 200) { // Successful response
         console.log(data); // Displays the response from the API
-        ipData = data;
+            ipData = data;
     } else {
         console.log(err);
         ipData = err;

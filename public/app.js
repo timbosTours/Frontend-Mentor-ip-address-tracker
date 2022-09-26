@@ -65,12 +65,14 @@ async function loadMap(){
     var ipData = JSON.parse(data)
     console.log(ipData)
 
+    let lat = ipData.location.lat;
+    let long = ipData.location.lng;
 
-    let map = leaflet.map('map').setView([51.505, -0.09], 13);
+
+    let map = leaflet.map('map').setView([lat, long], 13);
 
 
 // Load tiles onto map for map styles
-    L.geoJSON(ipData).addTo(map);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '© OpenStreetMap'
