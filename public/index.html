@@ -37,13 +37,13 @@
   <br>
   
   <div>
-  <form id="ip-input-container">
-    <input id="ip-input" type="text" placeholder="Search for any IP address or domain">
+  <form action="/search" method="post" id="ip-input-container">
+    <input id="ip-input" type="text" name="ip" placeholder="Search for any IP address or domain">
     <button id="submit-ip-button" type="submit">
-  <img id="arrow-icon" src="./icon-arrow.svg" alt="arrow icon">
-</button>
+    <img id="arrow-icon" src="./icon-arrow.svg" alt="arrow icon">
+    </button>
 </form>
-</div><br>
+</div>
   <section id="info-div">
   <ul id="ip-info-list">
     <li id="li-ipAddress">
