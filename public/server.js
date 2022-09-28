@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const { response, urlencoded } = require('express');
+const { serialize } = require('v8');
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 
 // initiate app
@@ -15,13 +16,16 @@ app.use(express.static('./public'));
 // parse form data
 app.use(express.urlencoded({ extended: false }))
 app.get('/search', (req, res) => {
-    res.status(200).json({success: true})
+    res.status(200).json({ success: true })
+})
+
+// use post to recieve ip search data from form
+app.post('/search', (req, res) => {
+    res.send('post')
 })
 
 // create empty array to store data from API
 let ipData = {}
-
-
 
 // get data from api
 request.get(`https://geo.ipify.org/api/v2/country,city?apiKey=${process.env.API_KEY}`,
@@ -41,11 +45,6 @@ app.get('/', (req, res) => {
     res.sendFile('./index.html')
 })
 
-// use post to recieve ip search data from form
-app.post('/search', (req, res) => {
-    console.log(req.body)
-    res.send('post')
-})
 
 // get ip data for client
 app.get('/ipData', (req, res) => {
