@@ -3,14 +3,13 @@ const request = require('request');
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const { response, urlencoded } = require('express');
-const { serialize } = require('v8');
+const { response, urlencoded, application } = require('express');
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 
 // initiate app
 const app = express();
 
-// serev static files(html, css, app.js, images etc...)
+// serve static files(html, css, app.js, images etc...)
 app.use(express.static('./public'));
 
 // parse form data
@@ -19,16 +18,20 @@ app.get('/search', (req, res) => {
     res.status(200).json({ success: true })
 })
 
+
 // use post to recieve ip search data from form
+
 app.post('/search', (req, res) => {
-    res.send('post')
+    res.type('application/json')
+    let ipAddress = req.body
+    res.send(ipAddress)
 })
 
 // create empty array to store data from API
 let ipData = {}
 
 // get data from api
-request.get(`https://geo.ipify.org/api/v2/country,city?apiKey=${process.env.API_KEY}`,
+request.get(`https://geo.ipify.org/api/v2/country,city?apiKey=${process.env.API_KEY}&ipAddress=${process.env.IP_ADDRESS}`,
     function (err, res, data) {
         // check for response or error
         if (!err && res.statusCode == 200) { // Successful response
