@@ -1,4 +1,4 @@
-async function getIpData(ipData) {
+async function getIpData() {
     // fetch data from node server
     const response = await fetch('http://localhost:5000/ipData');
     const data = await response.json();
@@ -54,6 +54,13 @@ async function getIpData(ipData) {
 };
 
 getIpData();
+
+async function searchIp() {
+    const input = document.getElementById('ip-input');
+    let ip = input.value;
+    console.log(ip);
+};
+searchIp();
 
 // // Create map with Leaflet.js(long, lat, zoom level)
 
