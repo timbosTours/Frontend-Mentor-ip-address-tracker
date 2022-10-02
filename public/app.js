@@ -1,3 +1,5 @@
+const e = require("express");
+
 async function getIpData() {
     // fetch data from node server
     const response = await fetch('http://localhost:5000/ipData');
@@ -54,13 +56,17 @@ async function getIpData() {
 };
 
 getIpData();
+let btn = document.getElementById('submit-ip-button')
 
-async function searchIp() {
-    const input = document.getElementById('ip-input');
-    let ip = input.value;
-    console.log(ip);
-};
-searchIp();
+btn.addEventListener('submit', console.log('you submitted'));
+
+
+// function handleForm(ev) {
+//     ev.preventDefault();
+//     let myForm = ev.target;
+//     let fd = new FormData(myForm)
+//     console.log(fd)
+// }
 
 // // Create map with Leaflet.js(long, lat, zoom level)
 

@@ -3,8 +3,8 @@ const request = require('request');
 const express = require('express');
 const path = require('path');
 const { json, response } = require('express');
-// const fetch = (...args) =>
-// 	import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args) =>
+	import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 
@@ -52,10 +52,20 @@ app.get('/ipData', (req, res) => {
 });
 
 app.post('/search', (req, res, next) => {
-    console.log(req.body.ip)
-    res.send(req.body.ip)
-    response.end();
-    next()
+    const ip = req.body.ip
+    res.send(ip)
+    
+    // put function in here???
+    // async function searchIp(ip) {
+    //     let searchData = await fetch(`${api}apiKey=${apiKey}&ipAddress=${ip}`)
+    //         .then(res => res.json)
+    //         .then(json => {
+    //         return json
+    //     })
+    //     res.send(JSON.stringify(json))
+    // }
+    // searchIp()
+    // next()
 })
 app.all('*', (req, res) => {
     res.status(404).send('Resource not found')
