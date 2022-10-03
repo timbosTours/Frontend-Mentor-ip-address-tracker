@@ -51,9 +51,8 @@ app.get('/ipData', (req, res) => {
     res.jsonp(ipData);
 });
 
-app.post('/search', (req, res, next) => {
-    const ip = req.body.ip
-    res.send(ip)
+app.post('/', (req, res, next) => {
+    console.log(req.body)
     
     // put function in here???
     // async function searchIp(ip) {
