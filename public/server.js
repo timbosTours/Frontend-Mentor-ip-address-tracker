@@ -28,44 +28,46 @@ app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: false }));
 
 // get data from api
-request.get(`${api}apiKey=${apiKey}`,
-    function (err, res, data) {
-        // check for response or error
-        if (!err && res.statusCode == 200) { // Successful response
-        // console.log(data); // Displays the response from the API
-            ipData = data;
-    } else {
-        console.log(err);
-        ipData = err;
-    }
-});
+// request.get(`${api}apiKey=${apiKey}`,
+//     function (err, res, data) {
+//         // check for response or error
+//         if (!err && res.statusCode == 200) { // Successful response
+//         // console.log(data); // Displays the response from the API
+//             ipData = data;
+//     } else {
+//         console.log(err);
+//         ipData = err;
+//     }
+// });
 
 // get root
 app.get('/', (req, res) => {
     res.sendFile('./index.html');
 });
 
-// get ip data for client
-app.get('/ipData', (req, res) => {
-    res.type('application/json');
-    res.jsonp(ipData);
-});
+// // get ip data for client
+// app.get('/ipData', (req, res) => {
+//     res.type('application/json');
+//     res.jsonp(ipData);
+// });
 
-app.post('/', (req, res, next) => {
+app.post('/search', (req, res, next) => {
     console.log(req.body)
+    let ip = res.locals(req.body.ip)
+    next()
+})
     
-    // put function in here???
+ // put function in here???
     // async function searchIp(ip) {
     //     let searchData = await fetch(`${api}apiKey=${apiKey}&ipAddress=${ip}`)
     //         .then(res => res.json)
     //         .then(json => {
-    //         return json
     //     })
-    //     res.send(JSON.stringify(json))
+    //     console.log(searchData)
     // }
-    // searchIp()
-    // next()
-})
+
+    
+
 app.all('*', (req, res) => {
     res.status(404).send('Resource not found')
 });
