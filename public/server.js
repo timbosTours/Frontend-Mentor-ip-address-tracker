@@ -3,13 +3,16 @@ const request = require('request');
 const express = require('express');
 const path = require('path');
 const { json, response } = require('express');
+const { AsyncLocalStorage, executionAsyncResource } = require('async_hooks');
+const { createSecretKey } = require('crypto');
 const fetch = (...args) =>
 	import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 
-const api = 'https://geo.ipify.org/api/v2/country,city?'
+const api = 'https://geo.ipify.org/api/v2/country?'
 const apiKey = process.env.API_KEY;
+const context = new AsyncLocalStorage;
 const options = {
 	method: 'GET',
 	headers: {
@@ -17,6 +20,7 @@ const options = {
 		'X-RapidAPI-Key': 'your-rapidapi-key'
 	}
 };
+
 
 // initiate app
 const app = express();
@@ -27,46 +31,61 @@ app.use(express.static('./public'));
 // parse form data
 app.use(express.urlencoded({ extended: false }));
 
-// get data from api
-// request.get(`${api}apiKey=${apiKey}`,
-//     function (err, res, data) {
-//         // check for response or error
-//         if (!err && res.statusCode == 200) { // Successful response
-//         // console.log(data); // Displays the response from the API
-//             ipData = data;
+// const searchIp = () => {
+//     const ip = context.getStore().get('ip')
+
+//     if (ip !== undefined) {
+//         fetch(`${api}apiKey=${apiKey}&ipAddress=${ip}`)
+//             .then(response => console.log(response))
+//             .catch(error => {
+//             console.log('couldnt search ip');
+//             })
 //     } else {
-//         console.log(err);
-//         ipData = err;
+//         fetch(`${api}apiKey=${apiKey}`)
+//         .then(res => res.json)
+//             // .then(data => console.log(data))
+//             .catch(error => {
+//                 console.log('couldnt find ip');
+//             })
 //     }
-// });
+// }
+
+
+// get data from api
+request.get(`${api}apiKey=${apiKey}`,
+    function (err, res, data) {
+        // check for response or error
+        if (!err && res.statusCode == 200) { // Successful response
+        console.log(data); // Displays the response from the API
+            ipData = data;
+    } else {
+        console.log(err);
+        ipData = err;
+    }
+});
 
 // get root
 app.get('/', (req, res) => {
     res.sendFile('./index.html');
 });
 
-// // get ip data for client
-// app.get('/ipData', (req, res) => {
-//     res.type('application/json');
-//     res.jsonp(ipData);
-// });
 
-app.post('/search', (req, res, next) => {
-    console.log(req.body)
-    let ip = res.locals(req.body.ip)
-    next()
-})
+// app.post('/', (req, res, next) => {
+//     let ip = req.body.ip
+//     const store = new Map()
     
- // put function in here???
-    // async function searchIp(ip) {
-    //     let searchData = await fetch(`${api}apiKey=${apiKey}&ipAddress=${ip}`)
-    //         .then(res => res.json)
-    //         .then(json => {
-    //     })
-    //     console.log(searchData)
-    // }
-
+//     store.set('ip', ip)
     
+//     context.run(store, () => {
+//         searchIp()
+//     })
+//     next()
+// })
+// get ip data for client
+app.get('/ipData', (req, res) => {
+    res.type('application/json');
+    res.jsonp(ipData);
+});
 
 app.all('*', (req, res) => {
     res.status(404).send('Resource not found')

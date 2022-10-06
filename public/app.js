@@ -56,9 +56,9 @@ async function getIpData() {
 };
 
 getIpData();
-let btn = document.getElementById('submit-ip-button')
+// let btn = document.getElementById('submit-ip-button')
 
-btn.addEventListener('submit', console.log('you submitted'));
+// btn.addEventListener('submit', console.log('you submitted'));
 
 
 // function handleForm(ev) {
