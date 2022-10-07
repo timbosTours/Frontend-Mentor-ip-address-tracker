@@ -1,18 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <head> </head>
+  <head> 
+    <link rel="stylesheet" href="styles.css">
+  </head>
   <body>
-    <header>
+    <header id="header-div">
       <div> 
         <h1 id="main-header">IP Address Tracker</h1>
       </div>
-      <div> 
+      <div> </div>
+      <div>
         <form id="ip-input-container" action="/" method="POST">
           <input id="ip-input" type="text" name="ip" placeholder="Search for any IP address or domain">
           <button id="submit-ip-button" type="submit"> <img id="arrow-icon" src="./icon-arrow.svg" alt="arrow icon"></button>
         </form>
       </div>
+      <div id="info-div">
+        <ul> 
+          <li>
+            <h1 class="list-heading"> IP ADDRESS
+              <p> </p>
+            </h1>
+          </li>
+          <li>
+            <h1 class="list-heading"> LOCATION
+              <p> </p>
+            </h1>
+          </li>
+          <li> 
+            <h1 class="list-heading"> TIMEZONE
+              <p></p>
+            </h1>
+          </li>
+          <li>
+            <h1 class="list-heading"> ISP
+              <p></p>
+            </h1>
+          </li>
+        </ul>
+      </div>
     </header>
+    <main>   
+      <div id="map"></div>
+    </main>
+    <footer class="attribution"> <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor. Coded by</a><a href="https://www.frontendmentor.io/profile/timbosTours"></a></footer>
   </body>
-  <footer></footer>
 </html>

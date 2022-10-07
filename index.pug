@@ -1,15 +1,35 @@
 doctype html
 html
     head 
-        
+        link(rel="stylesheet" href="styles.css")
+        script(src="app.js")
+        script(src="")
     body
-        header
+        header#header-div
             div 
                 h1#main-header IP Address Tracker
             div 
+            div
                 form#ip-input-container(action="/" method="POST")
                     input#ip-input(type="text" name="ip" placeholder="Search for any IP address or domain")
                     button#submit-ip-button(type="submit") 
                         img#arrow-icon(src='./icon-arrow.svg' alt="arrow icon")
-
-    footer
+            div#info-div
+                ul  
+                    li
+                        h1.list-heading  IP ADDRESS
+                            p 
+                    li
+                        h1.list-heading  LOCATION
+                            p 
+                    li  
+                        h1.list-heading  TIMEZONE
+                            p
+                    li
+                        h1.list-heading  ISP
+                            p
+        main    
+            div#map
+        footer.attribution 
+            a(href="https://www.frontendmentor.io?ref=challenge" target="_blank") Frontend Mentor. Coded by
+            a(href="https://www.frontendmentor.io/profile/timbosTours")
