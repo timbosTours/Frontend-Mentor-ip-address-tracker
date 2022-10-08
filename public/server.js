@@ -2,9 +2,9 @@
 const request = require('request'); 
 const express = require('express');
 const path = require('path');
+const axios = require('axios');
 const { json, response } = require('express');
 const { AsyncLocalStorage, executionAsyncResource } = require('async_hooks');
-const { createSecretKey } = require('crypto');
 const fetch = (...args) =>
 	import('node-fetch').then(({default: fetch}) => fetch(...args));
 
@@ -27,7 +27,7 @@ const app = express();
 
 // serve static files(html, css, app.js, images etc...)
 app.use(express.static('./public'));
-app.use()
+
 // parse form data
 app.use(express.urlencoded({ extended: false }));
 
@@ -63,6 +63,11 @@ app.use(express.urlencoded({ extended: false }));
 //         ipData = err;
 //     }
 // });
+
+// lets try axios
+axios.get('https://geo.ipify.org/api/v2/country?apiKey=at_8GE1HPonrAAGY0ggGjL3YAuoxACZ1')
+	.then((res) => { console.log(res.data) })
+	
 
 // get root
 app.get('/', (req, res) => {
