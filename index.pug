@@ -3,7 +3,7 @@ html
     head 
         link(rel="stylesheet" href="styles.css")
         script(src="app.js")
-        script(src="")
+        script(src="server.js")
     body
         header#header-div
             div 
@@ -18,16 +18,16 @@ html
                 ul  
                     li
                         h1.list-heading  IP ADDRESS
-                            p 
+                            //- p #{ ipData.ip }
                     li
                         h1.list-heading  LOCATION
-                            p 
+                            //- p #{ ipData.location }
                     li  
                         h1.list-heading  TIMEZONE
-                            p
+                            //- p #{ ipData.timezone }
                     li
                         h1.list-heading  ISP
-                            p
+                            //- p #{ ipData.isp }
         main    
             div#map
         footer.attribution 
