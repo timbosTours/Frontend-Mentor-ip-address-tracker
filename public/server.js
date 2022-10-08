@@ -5,25 +5,16 @@ const path = require('path');
 const axios = require('axios');
 const { json, response } = require('express');
 const { AsyncLocalStorage, executionAsyncResource } = require('async_hooks');
-const fetch = (...args) =>
-	import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 
 const api = 'https://geo.ipify.org/api/v2/country?'
 const apiKey = process.env.API_KEY;
 const context = new AsyncLocalStorage;
-const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Host': 'famous-quotes4.p.rapidapi.com',
-		'X-RapidAPI-Key': 'your-rapidapi-key'
-	}
-};
-
 
 // initiate app
 const app = express();
+app.set('view engine', 'pug');
 
 // serve static files(html, css, app.js, images etc...)
 app.use(express.static('./public'));
@@ -31,25 +22,57 @@ app.use(express.static('./public'));
 // parse form data
 app.use(express.urlencoded({ extended: false }));
 
-// const searchIp = () => {
-//     const ip = context.getStore().get('ip')
 
-//     if (ip !== undefined) {
-//         fetch(`${api}apiKey=${apiKey}&ipAddress=${ip}`)
-//             .then(response => console.log(response))
-//             .catch(error => {
-//             console.log('couldnt search ip');
-//             })
-//     } else {
-//         fetch(`${api}apiKey=${apiKey}`)
-//         .then(res => res.json)
-//             // .then(data => console.log(data))
-//             .catch(error => {
-//                 console.log('couldnt find ip');
-//             })
-//     }
-// }
+let searchIp = () => {
+	const ip = context.getStore().get('ip')
 
+	if (ip !== undefined) {
+		axios.get(`${api}apiKey=${apiKey}&ipAddress=${ip}`)
+			.then((res) => {
+				let ipDataArray = [];
+				[res.data].map((ipData) => {
+					ipDataArray.push(ipData)
+					console.log(ipDataArray)
+				})
+				res.render("ipData", {
+					ipData: ipDataArray
+				})
+			})
+			.catch((error) => {
+						console.log(error)
+					})
+	} else {
+		axios.get(`${api}apiKey=${apiKey}`)
+			.then((res) => {
+				let ipDataArray = [];
+				[res.data].map((ipData) => {
+					ipDataArray.push(ipData)
+					console.log(ipDataArray)
+				})
+				res.render("ipData", {
+					ipData: ipDataArray
+				})
+			})
+			.catch((error) => {
+						console.log(error)
+					})
+	}
+};
+
+// axios.get(`${api}apiKey=${apiKey}`)
+// 			.then((_res) => {
+// 				let ipDataArray = [];
+// 				[_res.data].map((ipData) => {
+// 					ipDataArray.push(ipData)
+// 					console.log(ipDataArray)
+// 				})
+// 				// _res.render("ipData", {
+// 				// 	ipData: ipDataArray
+// 				// })
+// 			})
+// 			.catch((error) => {
+// 						console.log(error)
+// 					})
 
 // get data from api
 // request.get(`${api}apiKey=${apiKey}`,
@@ -64,28 +87,24 @@ app.use(express.urlencoded({ extended: false }));
 //     }
 // });
 
-// lets try axios
-axios.get('https://geo.ipify.org/api/v2/country?apiKey=at_8GE1HPonrAAGY0ggGjL3YAuoxACZ1')
-	.then((res) => { console.log(res.data) })
-	
-
 // get root
-app.get('/', (req, res) => {
-    res.sendFile('./index.html');
+app.get('/', searchIp, (req, _res) => {
+	_res.sendFile('./index.html');
+	next()
 });
 
 
-// app.post('/', (req, res, next) => {
-//     let ip = req.body.ip
-//     const store = new Map()
+app.post('/search', (req, res, next) => {
+    let ip = req.body.ip
+    const store = new Map()
     
-//     store.set('ip', ip)
+    store.set('ip', ip)
     
-//     context.run(store, () => {
-//         searchIp()
-//     })
-//     next()
-// })
+    context.run(store, () => {
+		searchIp(ip)
+	})
+	next()
+})
 // get ip data for client
 // app.get('/ipData', (req, res) => {
 //     res.type('application/json');

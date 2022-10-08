@@ -3,31 +3,31 @@ html
     head 
         link(rel="stylesheet" href="styles.css")
         script(src="app.js")
-        script(src="server.js")
     body
         header#header-div
             div 
                 h1#main-header IP Address Tracker
             div 
             div
-                form#ip-input-container(action="/" method="POST")
+                form#ip-input-container(action="/search" method="POST")
                     input#ip-input(type="text" name="ip" placeholder="Search for any IP address or domain")
                     button#submit-ip-button(type="submit") 
                         img#arrow-icon(src='./icon-arrow.svg' alt="arrow icon")
             div#info-div
-                ul  
+                ul 
                     li
                         h1.list-heading  IP ADDRESS
-                            //- p #{ ipData.ip }
+                            //- each ipData  in ipData 
+                                p= ipData.ip
                     li
                         h1.list-heading  LOCATION
-                            //- p #{ ipData.location }
+                            //- p= ipData.location
                     li  
                         h1.list-heading  TIMEZONE
-                            //- p #{ ipData.timezone }
+                            //- p= ipData.location.timezone
                     li
                         h1.list-heading  ISP
-                            //- p #{ ipData.isp }
+                            //- p= ipData.isp
         main    
             div#map
         footer.attribution 
