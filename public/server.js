@@ -5,6 +5,7 @@ const path = require('path');
 const axios = require('axios');
 const { json, response } = require('express');
 const { AsyncLocalStorage, executionAsyncResource } = require('async_hooks');
+const { dirname } = require('path');
 
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 
@@ -15,6 +16,7 @@ const context = new AsyncLocalStorage;
 // initiate app
 const app = express();
 app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'public'));
 
 // serve static files(html, css, app.js, images etc...)
 app.use(express.static('./public'));
@@ -34,9 +36,13 @@ let searchIp = () => {
 					ipDataArray.push(ipData)
 					console.log(ipDataArray)
 				})
-				res.render("ipData", {
-					ipData: ipDataArray
+				res.render('index', {
+					ip: ipDataArray.ip,
+					region: ipDataArray.location.region,
+					timezone: ipDataArray.location.timezone,
+					isp: ipDataArray.isp
 				})
+				
 			})
 			.catch((error) => {
 						console.log(error)
@@ -49,8 +55,11 @@ let searchIp = () => {
 					ipDataArray.push(ipData)
 					console.log(ipDataArray)
 				})
-				res.render("ipData", {
-					ipData: ipDataArray
+				res.render('index', {
+					ip: ipDataArray.ip,
+					region: ipDataArray.location.region,
+					timezone: ipDataArray.location.timezone,
+					isp: ipDataArray.isp
 				})
 			})
 			.catch((error) => {
@@ -59,43 +68,28 @@ let searchIp = () => {
 	}
 };
 
-// axios.get(`${api}apiKey=${apiKey}`)
-// 			.then((_res) => {
-// 				let ipDataArray = [];
-// 				[_res.data].map((ipData) => {
-// 					ipDataArray.push(ipData)
-// 					console.log(ipDataArray)
-// 				})
-// 				// _res.render("ipData", {
-// 				// 	ipData: ipDataArray
-// 				// })
-// 			})
-// 			.catch((error) => {
-// 						console.log(error)
-// 					})
-
-// get data from api
-// request.get(`${api}apiKey=${apiKey}`,
-//     function (err, res, data) {
-//         // check for response or error
-//         if (!err && res.statusCode == 200) { // Successful response
-//         console.log(data); // Displays the response from the API
-//             ipData = data;
-//     } else {
-//         console.log(err);
-//         ipData = err;
-//     }
-// });
+axios.get(`${api}apiKey=${apiKey}`)
+			.then((res) => {
+				let ipDataArray = [];
+				[res.data].map((ipData) => {
+					ipDataArray.push(ipData)
+					console.log(ipDataArray)
+				})
+				res.render('index', {
+					ip: ipDataArray.ip,
+					region: ipDataArray.location.region,
+					timezone: ipDataArray.location.timezone,
+					isp: ipDataArray.isp
+				})
+			})
+			.catch((error) => {
+						console.log(error)
+					})
 
 // get root
-app.get('/', searchIp, (req, _res) => {
-	_res.sendFile('./index.html');
-	next()
-});
 
-
-app.post('/search', (req, res, next) => {
-    let ip = req.body.ip
+app.post('/', (req, res, next) => {
+	let ip = req.body.ip
     const store = new Map()
     
     store.set('ip', ip)
@@ -105,11 +99,7 @@ app.post('/search', (req, res, next) => {
 	})
 	next()
 })
-// get ip data for client
-// app.get('/ipData', (req, res) => {
-//     res.type('application/json');
-//     res.jsonp(ipData);
-// });
+
 
 app.all('*', (req, res) => {
     res.status(404).send('Resource not found')
