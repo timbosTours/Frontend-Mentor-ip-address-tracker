@@ -15,8 +15,8 @@ const context = new AsyncLocalStorage;
 
 // initiate app
 const app = express();
+app.set('public', path.join(__dirname, 'public'));
 app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'public'));
 
 // serve static files(html, css, app.js, images etc...)
 app.use(express.static('./public'));
@@ -55,7 +55,7 @@ let searchIp = () => {
 					ipDataArray.push(ipData)
 					console.log(ipDataArray)
 				})
-				res.render('index', {
+				res.render('index.pug', {
 					ip: ipDataArray.ip,
 					region: ipDataArray.location.region,
 					timezone: ipDataArray.location.timezone,
@@ -68,24 +68,23 @@ let searchIp = () => {
 	}
 };
 
-axios.get(`${api}apiKey=${apiKey}`)
-			.then((res) => {
-				let ipDataArray = [];
-				[res.data].map((ipData) => {
-					ipDataArray.push(ipData)
-					console.log(ipDataArray)
-				})
-				res.render('index', {
-					ip: ipDataArray.ip,
-					region: ipDataArray.location.region,
-					timezone: ipDataArray.location.timezone,
-					isp: ipDataArray.isp
-				})
-			})
-			.catch((error) => {
-						console.log(error)
-					})
 
+// TRY?? adding to array then render array in pug https://www.youtube.com/watch?v=Ad2ngx6CT0M&t=425s 
+
+
+
+axios.get(`${api}apiKey=${apiKey}`)
+		.then((res) => {
+			res.render('index.pug', {
+				ip: res.data.ip,
+				location: res.location.region,
+				timezone: res.data.location.timezone,
+				isp: res.data.isp
+			})
+		})
+		.catch((error) => {
+			console.log(error)
+		})
 // get root
 
 app.post('/', (req, res, next) => {
