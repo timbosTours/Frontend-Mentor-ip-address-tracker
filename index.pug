@@ -15,19 +15,20 @@ html
                     button#submit-ip-button(type="submit") 
                         img#arrow-icon(src='./icon-arrow.svg' alt="arrow icon")
             div#info-div
-                ul 
-                    li
+                each i in ip
+                    ul  
+                        li
                         h1.list-heading  IP ADDRESS
-                        p #{ip}
-                    li
+                            p #{ip.ip}
+                        li
                         h1.list-heading  LOCATION
-                        p #{location}
-                    li  
+                            p #{ip.location.region}
+                        li  
                         h1.list-heading  TIMEZONE
-                        p #{timezone}
-                    li
+                            p #{ip.location.timezone}
+                        li
                         h1.list-heading  ISP
-                        p #{isp}
+                            p #{ip.isp}
         main    
             div#map
         footer.attribution 

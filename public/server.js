@@ -73,18 +73,24 @@ let searchIp = () => {
 
 
 
-axios.get(`${api}apiKey=${apiKey}`)
-		.then((res) => {
-			res.render('index.pug', {
-				ip: res.data.ip,
-				location: res.location.region,
-				timezone: res.data.location.timezone,
-				isp: res.data.isp
-			})
-		})
-		.catch((error) => {
-			console.log(error)
-		})
+// axios.get(`${api}apiKey=${apiKey}`)
+// 	.then(async (res) => {
+// 		await res.render('index.pug', {
+// 				ip: ipData,
+// 			})
+// 		})
+// 		.catch((error) => {
+// 			console.log(error)
+// 		})
+
+axios.get(`${api}apiKey=${apiKey}&ipAddress=${ip}`)
+			.then((res) => {
+				let ipDataArray = [];
+				[res.data].map((ipData) => {
+					ipDataArray.push(ipData)
+				})
+				res.render('index', {
+					ip: ipDataArray,
 // get root
 
 app.post('/', (req, res, next) => {
