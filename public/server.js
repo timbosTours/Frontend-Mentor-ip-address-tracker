@@ -7,10 +7,10 @@ const { json, response } = require('express');
 const { AsyncLocalStorage, executionAsyncResource } = require('async_hooks');
 const { dirname } = require('path');
 
-require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
+// require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 
-const api = 'https://geo.ipify.org/api/v2/country?'
-const apiKey = process.env.API_KEY;
+// const api = 'https://geo.ipify.org/api/v2/country?'
+// const apiKey = process.env.API_KEY;
 const context = new AsyncLocalStorage;
 
 // initiate app
@@ -25,48 +25,49 @@ app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: false }));
 
 
-let searchIp = () => {
-	const ip = context.getStore().get('ip')
+// let searchIp = () => {
+// 	const ip = context.getStore().get('ip')
 
-	if (ip !== undefined) {
-		axios.get(`${api}apiKey=${apiKey}&ipAddress=${ip}`)
-			.then((res) => {
-				let ipDataArray = [];
-				[res.data].map((ipData) => {
-					ipDataArray.push(ipData)
-					console.log(ipDataArray)
-				})
-				res.render('index', {
-					ip: ipDataArray.ip,
-					region: ipDataArray.location.region,
-					timezone: ipDataArray.location.timezone,
-					isp: ipDataArray.isp
-				})
+// 	if (ip !== undefined) {
+// 		axios.get(`${api}apiKey=${apiKey}&ipAddress=${ip}`)
+// 			.then((res) => {
+// 				let ipDataArray = [];
+// 				[res.data].map((ipData) => {
+// 					ipDataArray.push(ipData)
+// 					console.log(ipDataArray)
+// 				})
+// 				res.render('index', {
+// 					ip: ipDataArray.ip,
+// 					region: ipDataArray.location.region,
+// 					timezone: ipDataArray.location.timezone,
+// 					isp: ipDataArray.isp
+// 				})
 				
-			})
-			.catch((error) => {
-						console.log(error)
-					})
-	} else {
-		axios.get(`${api}apiKey=${apiKey}`)
-			.then((res) => {
-				let ipDataArray = [];
-				[res.data].map((ipData) => {
-					ipDataArray.push(ipData)
-					console.log(ipDataArray)
-				})
-				res.render('index.pug', {
-					ip: ipDataArray.ip,
-					region: ipDataArray.location.region,
-					timezone: ipDataArray.location.timezone,
-					isp: ipDataArray.isp
-				})
-			})
-			.catch((error) => {
-						console.log(error)
-					})
-	}
-};
+// 			})
+// 			.catch((error) => {
+// 						console.log(error)
+// 					})
+// 	} else {
+// 		axios.get(`${api}apiKey=${apiKey}`)
+// 			.then((res) => {
+// 				let ipDataArray = [];
+// 				[res.data].map((ipData) => {
+// 					ipDataArray.push(ipData)
+// 					console.log(ipDataArray)
+// 				})
+// 				res.render('index.pug', {
+// 					ip: ipDataArray.ip,
+// 					region: ipDataArray.location.region,
+// 					timezone: ipDataArray.location.timezone,
+// 					isp: ipDataArray.isp
+// 				})
+// 			})
+// 			.catch((error) => {
+// 						console.log(error)
+// 					})
+// 	}
+// };
+
 
 
 // TRY?? adding to array then render array in pug https://www.youtube.com/watch?v=Ad2ngx6CT0M&t=425s 
@@ -83,14 +84,15 @@ let searchIp = () => {
 // 			console.log(error)
 // 		})
 
-axios.get(`${api}apiKey=${apiKey}&ipAddress=${ip}`)
-			.then((res) => {
-				let ipDataArray = [];
-				[res.data].map((ipData) => {
-					ipDataArray.push(ipData)
-				})
-				res.render('index', {
-					ip: ipDataArray,
+// axios.get(`${api}apiKey=${apiKey}&ipAddress=${ip}`)
+// 			.then((res) => {
+// 				let ipDataArray = [];
+// 				[res.data].map((ipData) => {
+// 					ipDataArray.push(ipData)
+// 				})
+// 				res.render('index', {
+// 					ip: ipDataArray,
+// 				})
 // get root
 
 app.post('/', (req, res, next) => {
@@ -102,7 +104,8 @@ app.post('/', (req, res, next) => {
     context.run(store, () => {
 		searchIp(ip)
 	})
-	next()
+	searchIp()
+	return next()
 })
 
 
